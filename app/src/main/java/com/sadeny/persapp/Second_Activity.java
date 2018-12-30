@@ -27,7 +27,7 @@ implements View.OnClickListener
          email = getIntent().getStringExtra(Constant_Var.EMAIL_KEY);
          Toast.makeText(this,email,Toast.LENGTH_LONG).show();
 
-        setContentView(R.layout.activity_second);
+          setContentView(R.layout.activity_second);
          validate = (Button)findViewById(R.id.validate);
          back=(Button)findViewById(R.id.back);
          back.setOnClickListener(this);

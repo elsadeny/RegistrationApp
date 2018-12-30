@@ -17,14 +17,14 @@
     <Button
         android:id="@+id/validate"
         android:layout_width="wrap_content"
-        android:background="@drawable/but_back"
+        android:background="@drawable/testx"
         android:layout_centerInParent="true"
         android:text="Validate Password"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/back"
         android:layout_width="match_parent"
-        android:background="@drawable/but_back"
+        android:background="@drawable/testx"
         android:layout_alignParentBottom="true"
         android:text="Go Back"
         android:layout_height="wrap_content" />
