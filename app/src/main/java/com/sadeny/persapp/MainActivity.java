@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -30,7 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RadioGroup radioSexGroup;
     RadioButton radioSexButton;
     Spinner spinner;
+    String AGE;
     UserData userData;
+
+    DealWithCheckBox dealWithCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addAgeToSpinner();
         spinner.setOnItemSelectedListener(this);
 
+        radioSexGroup=(RadioGroup)findViewById(R.id.radioSex);
         //init the data
         userData = new UserData(this);
+
+        //get the info
+        autoFilling();
 
     }
 
@@ -77,6 +85,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return m.matches();
     }
 
+    public void autoFilling()
+    {
+        Map<String,String> map = new HashMap<>();
+        map = userData.getAllData();  //get data from preference
+
+        //populate data in the field
+        first_name.setText(map.get(Constant_Var.FIRST_NAME_KEY));
+        last_name.setText(map.get(Constant_Var.LAST_NAME_KEY));
+        email.setText(map.get(Constant_Var.EMAIL_KEY));
+        spinner.setPrompt(map.get(Constant_Var.AGE_key));
+        Integer gender= Integer.valueOf(map.get(Constant_Var.GENDER_KEY)); //get the id of the checked
+        if(!gender.equals(null))
+        {
+            radioSexGroup.check(gender);
+        }
+        password.setText(map.get(Constant_Var.PASSWORD));
+
+        //auto fill check box
+        dealWithCheckBox = new DealWithCheckBox();
+    }
+
     @Override
     public void onClick(View view)
     {
@@ -86,10 +115,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //get and save data()
             Map<String,String> dataMap = new HashMap<>();
             dataMap.put(Constant_Var.FIRST_NAME_KEY,first_name.getText().toString());
-            dataMap.put(Constant_Var.LAST_NAME_KEY,first_name.getText().toString());
+            dataMap.put(Constant_Var.LAST_NAME_KEY,last_name.getText().toString());
             dataMap.put(Constant_Var.EMAIL_KEY,email.getText().toString());
-            dataMap.put(Constant_Var.AGE_key,spinner.toString());
-            dataMap.put(Constant_Var.GENDER_KEY,getGender());
+            dataMap.put(Constant_Var.AGE_key,AGE);
+            dataMap.put(Constant_Var.PASSWORD,password.getText().toString());
+            dataMap.put(Constant_Var.GENDER_KEY,String.valueOf(getGender()));
 
             //commit change to the local store
             userData.saveAllData(dataMap);
@@ -103,14 +133,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Please put the valid Email address", Toast.LENGTH_SHORT).show();
             }
 
+            dealWithCheckBox.setData();
+
 
         }
     }
 
+    public class DealWithCheckBox
+    {
+         public CheckBox foot,bask,skii,game;
+         Map<Integer,Boolean> map = new HashMap<>();
+         List<Integer> checkId = new ArrayList<>();
+         List<CheckBox> checb= new ArrayList<>();
+
+        DealWithCheckBox()
+        {
+            foot =(CheckBox)findViewById(R.id.foot);
+            bask = (CheckBox)findViewById(R.id.bask);
+            skii =(CheckBox)findViewById(R.id.skii);
+            game= (CheckBox)findViewById(R.id.game);
+            checkId.add(foot.getId());
+            checkId.add(bask.getId());
+            checkId.add(skii.getId());
+            checkId.add(game.getId());
+            checb.add(foot);
+            checb.add(bask);
+            checb.add(skii);
+            checb.add(game);
+
+            getData();
+        }
+
+        public void  getData()
+        {
+            for(int i=0;i<checkId.size();i++)
+            {
+                checb.get(i).setChecked(userData.getHobbie(checkId.get(i)));
+            }
+
+        }
+
+        public void setData()
+        {
+            map.put(foot.getId(),foot.isChecked());
+            map.put(bask.getId(),bask.isChecked());
+            map.put(skii.getId(),skii.isChecked());
+            map.put(game.getId(),game.isChecked());
+            userData.saveHobbies(map);
+        }
+
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //implement onItemSelected
+       AGE = parent.getItemAtPosition(position).toString();
     }
 
     @Override
@@ -118,16 +195,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //implement onNothingSelected
     }
 
-    public String getGender() {
+    public Integer getGender() {
         // Is the button now checked?
         // get selected radio button from radioGroup
-        radioSexGroup=(RadioGroup)findViewById(R.id.radioSex);
-        int selectedId = radioSexGroup.getCheckedRadioButtonId();
 
+        //int selectedId = radioSexGroup.getCheckedRadioButtonId();
+
+        return radioSexGroup.getCheckedRadioButtonId();
         // find the radiobutton by returned id
-        radioSexButton = (RadioButton) findViewById(selectedId);
-        return radioSexButton.getText().toString();
+        //radioSexButton = (RadioButton) findViewById(selectedId);
+       // Map map = new HashMap<>();
+       // return radioSexButton.getText().toString();
     }
-
 
 }

@@ -41,9 +41,21 @@ public class UserData extends PreferenceActivity {
         dataMap.put(Constant_Var.LAST_NAME_KEY,sharedPreferences.getString(Constant_Var.LAST_NAME_KEY,null));
         dataMap.put(Constant_Var.EMAIL_KEY,sharedPreferences.getString(Constant_Var.EMAIL_KEY,null));
         dataMap.put(Constant_Var.AGE_key,sharedPreferences.getString(Constant_Var.AGE_key,null));
-        dataMap.put(Constant_Var.GENDER_KEY,sharedPreferences.getString(Constant_Var.GENDER_KEY,null));
+        dataMap.put(Constant_Var.GENDER_KEY,sharedPreferences.getString(Constant_Var.GENDER_KEY,String.valueOf(0)));
         dataMap.put(Constant_Var.PASSWORD,sharedPreferences.getString(Constant_Var.PASSWORD,null));
         return dataMap;
+    }
+
+    public void saveHobbies(Map<Integer,Boolean> checkboxes)
+    {
+        for(Map.Entry<Integer,Boolean> entry: checkboxes.entrySet())
+        {
+            editor.putBoolean(entry.getKey().toString(),entry.getValue());
+        }
+    }
+    public boolean getHobbie(Integer key)
+    {
+        return sharedPreferences.getBoolean(key.toString(),false);
     }
 
 }

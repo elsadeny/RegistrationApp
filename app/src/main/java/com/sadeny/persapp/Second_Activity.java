@@ -22,6 +22,7 @@ implements View.OnClickListener
 
         //supporting parent activity button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         //get email from parent activity
         //Bundle bundle= getIntent().getExtras();
@@ -34,6 +35,13 @@ implements View.OnClickListener
          back=(Button)findViewById(R.id.back);
          back.setOnClickListener(this);
          validate.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp()
+    {
+        onBackPressed();
+        return true;
     }
 
     @Override
