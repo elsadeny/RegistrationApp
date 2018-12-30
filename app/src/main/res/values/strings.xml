@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">persApp</string>
+    <string name="app_label">Register Application</string>
+    <string name="app_label2">Registered</string>
     <string name="prompt_fname">Input your First Name</string>
     <string name="prompt_lname">Input your Last Name</string>
     <string name="prompt_email">Input your Email address</string>
