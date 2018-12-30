@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">persApp</string>
+    <string name="prompt_fname">Input your First Name</string>
+    <string name="prompt_lname">Input your Last Name</string>
+    <string name="prompt_email">Input your Email address</string>
+    <string name="submit">Submit</string>
+    <string name="prompt_password">Input password</string>
+    <string name="radio_male">Male</string>
+    <string name="radio_female">Female</string>
+
+
+    <!-- hobbies list  -->
+    <string name="prompt_hooby">Choose your hobbies</string>
+    <string name="basketball">Basketball</string>
+    <string name="skiing">Skiing</string>
+    <string name="footbal">Football</string>
+    <string name="game">Video Game</string>
+
+    <string name="prompt_sub">Your submission is completed,Thank you!</string>
+</resources>
