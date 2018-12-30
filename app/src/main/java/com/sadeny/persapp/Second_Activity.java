@@ -57,6 +57,10 @@ implements View.OnClickListener
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(domain));
             startActivity(intent);
         }
+        if(view ==back)
+        {
+            onBackPressed();
+        }
     }
     @Override
     public void onBackPressed()
